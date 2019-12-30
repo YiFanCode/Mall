@@ -5,9 +5,17 @@
 </template>
 
 <script>
-
+import Storage from './storage'
 export default {
-  name: 'app'
+  name: 'app',
+  data() {
+    return {
+      val: ''
+    }
+  },
+  mounted() {
+    this.val = Storage.getItem('b', 'user')
+  }
 }
 </script>
 
