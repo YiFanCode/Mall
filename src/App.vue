@@ -5,20 +5,11 @@
 </template>
 
 <script>
-import Storage from './storage'
 export default {
-  name: 'app',
-  data() {
-    return {
-      val: ''
-    }
-  },
-  mounted() {
-    this.val = Storage.getItem('b', 'user')
-  }
+  name: 'app'
 }
 </script>
 
-<style>
-
+<style lang="scss">
+@import '~assets/scss/reset.scss';
 </style>

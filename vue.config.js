@@ -2,14 +2,15 @@ const path = require('path')
 const resolve = (dir) => path.resolve(__dirname, dir)
 
 module.exports = {
-    chainWebpack(config){
+    chainWebpack: (config) => {
         config.resolve.alias
         .set('components', resolve('src/components'))
+        .set('assets', resolve('src/assets'))
         .set('pages', resolve('src/pages'))
         .set('api', resolve('src/api'))
     },
-    devSever: {
-        host: 'localhsot',
+    devServer: {
+        host: 'localhost',
         port: 8080,
         proxy: {
             '/api': {
