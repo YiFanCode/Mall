@@ -27,7 +27,7 @@
                         <span>小米手机</span>
                         <div class="children">
                             <ul class="clearfix">
-                                <li v-for="item in phoneList" :key="item.categoryId" class="product">
+                                <li v-for="(item, index) in phoneList" :key="index" class="product">
                                     <a :href="'/#/product/'+item.categoryId" target="_blank">
                                         <div class="pro-img">
                                             <img :src="item.mainImage" alt="">
@@ -236,6 +236,7 @@
                             font-size: 12px;
                             line-height: 12px;
                             text-align: center;
+                            background: #fff;
                             a{
                                 display: inline-block;
                             }
