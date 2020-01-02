@@ -159,7 +159,6 @@
 <style lang="scss" scoped>
 @import '~assets/scss/config.scss';
 @import '~assets/scss/mixin.scss';
-@import '~assets/scss/base.scss';
 
 .header{
     .nav-topbar{
@@ -227,6 +226,7 @@
                         border-top: 1px solid $colorH;
                         box-shadow:0px 7px 6px 0px rgba(0, 0, 0, 0.11);
                         overflow: hidden;
+                        background: #fff;
                         .product{
                             position: relative;
                             width: 16.6%;
@@ -236,7 +236,6 @@
                             font-size: 12px;
                             line-height: 12px;
                             text-align: center;
-                            background: #fff;
                             a{
                                 display: inline-block;
                             }
