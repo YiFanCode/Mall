@@ -49,16 +49,41 @@
                 </swiper>
             </div>
             <div class="ads-box">
-                <div class="container ads-wrap">
+                <div class="ads-wrap">
                     <a class="ads-item" v-for="(item,index) in absList" :key="index" :href="'/#/product/'+item.id">
                        <img v-lazy="item.img" alt="">
                     </a>
                 </div>
             </div>
-            <div class="banner container">
+            <div class="banner">
                 <a :href="'/#/product/'+banner.id"><img v-lazy="banner.img" alt=""></a>
             </div>
-            <div class="product-box"></div>
+        </div>
+        <div class="product-box">
+            <div class="container">
+                <div class="category" v-for="(category, i) in phoneList" :key="i">
+                    <h2 class="category-title">{{category.categoryTitle}}</h2>
+                    <div class="wrapper">
+                        <div class="banner-left">
+                            <a href="/#/product/33"><img v-lazy="category.categoryList.bannerLeft" alt=""></a>
+                        </div>
+                        <div class="list-box">
+                            <div class="list-item" v-for="(item, j) in category.categoryList.categoryProduct" :key="j">
+                                <span v-if="j % 2 === 0" class="tag prod-new">新品</span>
+                                <!-- <span v-else class="tag prod-kill">秒杀</span> -->
+                                <div class="product-img">
+                                    <img v-lazy="item.mainImage" alt="">
+                                </div>
+                                <div class="item-info">
+                                    <h3 class="prod-title">{{item.name}}</h3>
+                                    <p class="prod-desc">{{item.subtitle}}</p>
+                                    <p class="prod-price">{{item.price | currency}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <service-bar></service-bar>
     </div>
@@ -112,13 +137,36 @@
                     {id: 45, img: '/imgs/ads/ads-3.png'},
                     {id: 47, img: '/imgs/ads/ads-4.jpg'}
                 ],
-                banner: {id: '', img: '/imgs/banner-1.png'}
+                banner: {id: '', img: '/imgs/banner-1.png'},
+                phoneList: [
+                    {
+                        categoryTitle: '手机',
+                        categoryList :{
+                            bannerLeft: '/imgs/mix-alpha.jpg',
+                            categoryProduct: []
+                        }
+                    }
+                ]
             }
+        },
+        mounted() {
+            this.init()
         },
         components: {
             ServiceBar,
             swiper,
             swiperSlide
+        },
+        methods: {
+            async init() {
+                const res = await this.axios.get('/products', {
+                    params: {
+                        categoryId: '100012',
+                        pageSize: 14
+                    }
+                })
+                this.phoneList[0].categoryList.categoryProduct = res.list.slice(6,14);
+            }
         }
     }
 </script>
@@ -253,6 +301,94 @@
         padding: 30px 0 50px 0;
         a{
             display: block;
+        }
+    }
+
+    .product-box{
+        background-color: $colorJ;
+        padding: 30px 0;
+        .category-title{
+            font-size: $fontF;
+            height: 21px;
+            line-height: 21px;
+            color: $colorB;
+        }
+        .wrapper{
+            display: flex;
+            padding: 20px 0;
+            .banner-left{
+                width: 229px;
+                height: 619px;
+                margin-right: 16px;
+            }
+            .list-box{
+                display: flex;
+                flex: 1;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                align-content: space-between;
+                .list-item{
+                    position: relative;
+                    width: 236px;
+                    height: 302px;
+                    background: #fff;
+                    padding-top: 24px;
+                    text-align: center;
+                    box-sizing: border-box;
+                    .tag{
+                        position: absolute;
+                        top: 0;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 67px;
+                        height: 24px;
+                        color: #fff;
+                        font-size: $fontJ;
+                        text-align: center;
+                        line-height: 24px;
+                        &.prod-new{
+                            background-color: #7ECF68;
+                        }
+                        &.prod-kill{
+                            background-color: #E82626;
+                        }
+                    }
+                    .product-img{
+                        padding: 0 23px;
+                        img{
+                            width: 100%;
+                            height: 195px;
+                        }
+                    }
+                    .item-info{
+                        .prod-title{
+                            font-size: $fontJ;
+                            line-height: 14px;
+                            color: $colorB;
+                        }
+                        .prod-desc{
+                            line-height: 12px;
+                            color: $colorD;
+                            margin: 6px 0 13px 0;
+                        }
+                        .prod-price{
+                            font-size: $fontJ;
+                            line-height: 14px;
+                            font-weight: bold;
+                            color: #F20A0A;
+                            cursor: pointer;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            &::after{
+                                content: ' ';
+                                @include bgImg(20px, 16px, '/imgs/icon-cart-hover.png');
+                                margin-left: 8px;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

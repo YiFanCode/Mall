@@ -11,6 +11,14 @@ Vue.use(VueLazyload, {
 })
 // import env from './env'
 
+// 全局过滤器
+Vue.filter('currency',(val) => {
+      if(!val){
+          return '0.00'
+      }
+      return ` ¥${val.toFixed(2)}元`
+})
+
 // 根据前端跨域方式做调整
 axios.defaults.baseURL = '/api'
 axios.defaults.timeout = 8000

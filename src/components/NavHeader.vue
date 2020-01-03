@@ -129,14 +129,6 @@
         mounted() {
             this.getProductList()
         },
-        filters: {
-            currency(val){
-                if(!val){
-                    return '0.00'
-                }
-                return ` ¥${val.toFixed(2)}元`
-            }
-        },
         methods: {
             login() {
                 this.$router.push('/login')
