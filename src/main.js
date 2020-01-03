@@ -2,6 +2,13 @@ import Vue from 'vue'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueLazyload from 'vue-lazyload'
+ 
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  loading: '/imgs/loading-svg/loading-bars.svg',
+  attempt: 1,
+})
 // import env from './env'
 
 // 根据前端跨域方式做调整

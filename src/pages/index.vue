@@ -10,7 +10,7 @@
                                 <ul v-for="(item, i) in menuList" :key="i">
                                     <li v-for="(sub, j) in item" :key="j">
                                         <a :href="sub ? '/#/product/'+ sub.id : ''">
-                                            <img :src="sub ? sub.img : '/imgs/item-box-1.png'" alt=""><span>{{sub ? sub.name : '小米9'}}</span>
+                                            <img v-lazy="sub ? sub.img : '/imgs/item-box-1.png'" alt=""><span>{{sub ? sub.name : '小米9'}}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -48,9 +48,15 @@
                     <div class="swiper-button-next" slot="button-next"></div>
                 </swiper>
             </div>
-            <div class="ads-box"></div>
-            <div class="banner">
-
+            <div class="ads-box">
+                <div class="container ads-wrap">
+                    <a class="ads-item" v-for="(item,index) in absList" :key="index" :href="'/#/product/'+item.id">
+                       <img v-lazy="item.img" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="banner container">
+                <a :href="'/#/product/'+banner.id"><img v-lazy="banner.img" alt=""></a>
             </div>
             <div class="product-box"></div>
         </div>
@@ -99,7 +105,14 @@
                         { id: 34, img: '/imgs/item-box-4.jpg', name: '移动4G+专区' }
                     ],
                     [0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]
-                ]
+                ],
+                absList: [
+                    {id: 33, img: '/imgs/ads/ads-1.png'},
+                    {id: 48, img: '/imgs/ads/ads-2.jpg'},
+                    {id: 45, img: '/imgs/ads/ads-3.png'},
+                    {id: 47, img: '/imgs/ads/ads-4.jpg'}
+                ],
+                banner: {id: '', img: '/imgs/banner-1.png'}
             }
         },
         components: {
@@ -111,6 +124,7 @@
 </script>
 
 <style lang="scss" scoped>
+@import '~assets/scss/base.scss';
 @import '~assets/scss/config.scss';
 @import '~assets/scss/mixin.scss';
 
@@ -222,6 +236,23 @@
                 left: inherit;
                 right: 0;
             }
+        }
+    }
+    .ads-box{
+        margin-top: 14px;
+        .ads-wrap{
+            @include flex();
+            .ads-item{
+                width: 296px;
+                height: 167px;
+            }
+        }
+    }
+    .banner{
+        height: 130px;
+        padding: 30px 0 50px 0;
+        a{
+            display: block;
         }
     }
 }
