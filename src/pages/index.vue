@@ -77,7 +77,7 @@
                                 <div class="item-info">
                                     <h3 class="prod-title">{{item.name}}</h3>
                                     <p class="prod-desc">{{item.subtitle}}</p>
-                                    <p class="prod-price">{{item.price | currency}}</p>
+                                    <p class="prod-price" @click="addCart">{{item.price | currency}}</p>
                                 </div>
                             </div>
                         </div>
@@ -85,12 +85,18 @@
                 </div>
             </div>
         </div>
+        <modal modalType="middle" title="提示" btnType="1" @submit="goToCart" @cancel="showModal=false" sureText="查看购物车" :showModal="showModal">
+            <template v-slot:body>
+                <p>商品添加成功！</p>
+            </template>
+        </modal>
         <service-bar></service-bar>
     </div>
 </template>
 
 <script>
     import ServiceBar from 'components/ServiceBar'
+    import Modal from 'components/Modal'
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
     import 'swiper/dist/css/swiper.css'
 
@@ -98,8 +104,11 @@
         name: 'index',
         data() {
             return {
+                showModal: false,
                 swiperOption: {
-                    autoplay: true,
+                    autoplay: {
+                        disableOnInteraction: false
+                    },
                     loop: true,
                     effect : 'cube',
                     cubeEffect: {
@@ -155,7 +164,8 @@
         components: {
             ServiceBar,
             swiper,
-            swiperSlide
+            swiperSlide,
+            Modal
         },
         methods: {
             async init() {
@@ -166,6 +176,13 @@
                     }
                 })
                 this.phoneList[0].categoryList.categoryProduct = res.list.slice(6,14);
+            },
+            addCart() {
+                this.showModal = true
+                /** /carts   {productId: , selected: true}*/
+            },
+            goToCart() {
+                this.$router.push('/cart')
             }
         }
     }
