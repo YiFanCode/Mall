@@ -71,7 +71,9 @@
                     username,
                     password
                 })
+        
                 this.$cookie.set('userId', res.id, {expires: '1M'})
+                this.$store.dispatch('saveUserName', res.username)
                 this.$router.push('/index')
             },
             async register() {

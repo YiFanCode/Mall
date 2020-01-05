@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import router from './router'
 import axios from 'axios'
+import store from './store'
 import VueAxios from 'vue-axios'
 import VueLazyload from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
@@ -39,6 +40,7 @@ axios.interceptors.response.use((response) => {
     if (path != '/#/index') {
       window.location.href = '/#/login'
     }
+    return Promise.reject(res)
   } else {
     alert(res.msg)
     return Promise.reject(res)
@@ -52,5 +54,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

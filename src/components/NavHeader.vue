@@ -11,9 +11,10 @@
                 <div class="topbar-user">
                     <a href="javascript:;" v-if="username">{{username}}</a>
                     <a href="javascript:;" @click="login" v-else>登录</a>
+                    <a href="javascript:;" v-if="username" @click="logout">退出</a>
                     <a href="javascript:;" v-if="username">我的订单</a>
                     <a href="javascript:;" v-else>注册</a>
-                    <a href="javascript:;"  @click="goToCart" class="my-cart"><span class="icon-cart"></span>购物车</a>
+                    <a href="javascript:;"  @click="goToCart" class="my-cart"><span class="icon-cart"></span>购物车({{cartCount}})</a>
                 </div>
             </div>
         </div>
@@ -118,16 +119,19 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex'
     export default {
         name: 'nav-header',
         data() {
             return {
-                username: '',
                 phoneList: []
             }
         },
         mounted() {
             this.getProductList()
+        },
+        computed: {
+            ...mapState(['username','cartCount'])
         },
         methods: {
             login() {
@@ -143,6 +147,14 @@
             },
             goToCart() {
                 this.$router.push('/cart')
+            },
+            logout(){
+                this.axios.post('/user/logout').then(()=>{
+                    // this.$message.success('退出成功');
+                    this.$cookie.set('userId','',{expires:'-1'});
+                    this.$store.dispatch('saveUserName','');
+                    this.$store.dispatch('saveCartCount','0');
+                })
             }
         }
     }

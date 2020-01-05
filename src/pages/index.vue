@@ -77,7 +77,7 @@
                                 <div class="item-info">
                                     <h3 class="prod-title">{{item.name}}</h3>
                                     <p class="prod-desc">{{item.subtitle}}</p>
-                                    <p class="prod-price" @click="addCart">{{item.price | currency}}</p>
+                                    <p class="prod-price" @click="addCart(item.id)">{{item.price | currency}}</p>
                                 </div>
                             </div>
                         </div>
@@ -177,9 +177,17 @@
                 })
                 this.phoneList[0].categoryList.categoryProduct = res.list.slice(6,14);
             },
-            addCart() {
-                this.showModal = true
-                /** /carts   {productId: , selected: true}*/
+            addCart(id) {
+                this.axios.post('/carts',{
+                    productId: id, 
+                    selected: true
+                }).then(res => {
+                    this.$store.dispatch("saveCartCount", res.cartTotalQuantity)
+                    this.showModal = true
+                }).catch(() => {
+                    this.showModal = true
+                })
+                
             },
             goToCart() {
                 this.$router.push('/cart')

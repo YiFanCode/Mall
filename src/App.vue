@@ -13,12 +13,12 @@ export default {
   },
   methods: {
     async getUser() {
-      const userResult = await this.axios.get('/user');
-      console.log(userResult)
+      const userResult = await this.axios.get('/user')
+      this.$store.dispatch('saveUserName', userResult.username || {})
     },
     async getCartCount() {
       const cartResult = await this.axios.get('/carts/products/sum');
-      console.log(cartResult)
+      this.$store.dispatch('saveCartCount', cartResult || 0)
     }
   }
 }
