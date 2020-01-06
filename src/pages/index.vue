@@ -184,10 +184,7 @@
                 }).then(res => {
                     this.$store.dispatch("saveCartCount", res.cartTotalQuantity)
                     this.showModal = true
-                }).catch(() => {
-                    this.showModal = true
-                })
-                
+                }) 
             },
             goToCart() {
                 this.$router.push('/cart')

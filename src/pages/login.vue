@@ -54,6 +54,7 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
     export default {
         name: 'login',
         data() {
@@ -64,6 +65,7 @@
             }
         },
         methods: {
+            ...mapActions(['saveUserName']),
             async login() {
                 let {username, password} = this
 
@@ -72,9 +74,14 @@
                     password
                 })
         
-                this.$cookie.set('userId', res.id, {expires: '1M'})
-                this.$store.dispatch('saveUserName', res.username)
-                this.$router.push('/index')
+                this.$cookie.set('userId', res.id, {expires:'Session'})
+                this.saveUserName(res.username)
+                this.$router.push({
+                    name: 'index',
+                    params: {
+                        from: 'login'
+                    }
+                })
             },
             async register() {
                 await this.axios.post('/user/register', {

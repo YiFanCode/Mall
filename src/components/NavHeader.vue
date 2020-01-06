@@ -129,6 +129,10 @@
         },
         mounted() {
             this.getProductList()
+            let params = this.$route.params
+            if (params && params.from == 'login') {
+                this.getCartCount()
+            }
         },
         computed: {
             ...mapState(['username','cartCount'])
@@ -137,6 +141,7 @@
             login() {
                 this.$router.push('/login')
             },
+            // 获取导航商品信息
             async getProductList() {
                 const result = await this.axios.get('/products', {
                     params: {
@@ -145,12 +150,17 @@
                 })
                 this.phoneList = result.list.length > 6 ? result.list.slice(0, 6): result.list
             },
+            // 获取购物车商品数量
+            async getCartCount() {
+                const cartResult = await this.axios.get('/carts/products/sum');
+                this.$store.dispatch('saveCartCount', cartResult || 0)
+            },
             goToCart() {
                 this.$router.push('/cart')
             },
             logout(){
                 this.axios.post('/user/logout').then(()=>{
-                    // this.$message.success('退出成功');
+                    this.$message.success('退出成功');
                     this.$cookie.set('userId','',{expires:'-1'});
                     this.$store.dispatch('saveUserName','');
                     this.$store.dispatch('saveCartCount','0');

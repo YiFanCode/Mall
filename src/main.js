@@ -5,6 +5,8 @@ import store from './store'
 import VueAxios from 'vue-axios'
 import VueLazyload from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
+import { Message } from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(VueCookie)
  
@@ -42,7 +44,7 @@ axios.interceptors.response.use((response) => {
     }
     return Promise.reject(res)
   } else {
-    alert(res.msg)
+    Message.warning(res.msg)
     return Promise.reject(res)
   }
 })
@@ -50,6 +52,7 @@ axios.interceptors.response.use((response) => {
 
 import App from './App.vue'
 Vue.use(VueAxios, axios)
+Vue.prototype.$message = Message;
 Vue.config.productionTip = false
 
 new Vue({
