@@ -50,9 +50,9 @@
                 </div>
             </div>
         </div>
-        <modal modalType="middle" title="提示" btnType="3" @submit="delProduct" @cancel="showModal=false" :showModal="showModal">
+        <modal modalType="middle" title="删除确认" btnType="1" @submit="delProduct" @cancel="closeModal" :showModal="showModal">
             <template v-slot:body>
-                <p>是否删除当前商品</p>
+                <p>您确定要删除此商品吗？</p>
             </template>
         </modal>
         <service-bar></service-bar>
@@ -136,10 +136,13 @@
             // 删除购物车商品
             async delProduct(){
                 const res = await this.axios.delete(`/carts/${this.delProitem.productId}`)
-                // this.$message.success('删除成功');
+                this.closeModal()
+                this.$message.success('删除成功');
+                this.renderData(res)
+            },
+            closeModal() {
                 this.showModal = false
                 this.delProitem = {}
-                this.renderData(res)
             },
             //购物下单
             order() {

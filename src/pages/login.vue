@@ -84,12 +84,12 @@
                 })
             },
             async register() {
-                await this.axios.post('/user/register', {
-                    username: 'admin',
-                    password: 'admin',
-                    email: 'admin@163.com'
-                })
-                alert('注册成功！')
+                // await this.axios.post('/user/register', {
+                //     username: 'jery',
+                //     password: 'jery',
+                //     email: 'jery@163.com'
+                // })
+                // this.$message.success('注册成功！')
             }
         }
     }
