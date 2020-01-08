@@ -47,6 +47,10 @@ axios.interceptors.response.use((response) => {
     Message.warning(res.msg)
     return Promise.reject(res)
   }
+}, (error)=>{
+  let res = error.response
+  Message.warning(res.data.message)
+  return Promise.reject(error)
 })
 
 
