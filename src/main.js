@@ -5,11 +5,10 @@ import store from './store'
 import VueAxios from 'vue-axios'
 import VueLazyload from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
-import { Message } from 'element-ui';
+import { Message} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(VueCookie)
- 
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   loading: '/imgs/loading-svg/loading-bars.svg',
