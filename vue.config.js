@@ -8,6 +8,7 @@ module.exports = {
         .set('assets', resolve('src/assets'))
         .set('pages', resolve('src/pages'))
         .set('api', resolve('src/api'))
+        config.plugins.delete('prefetch')
     },
     devServer: {
         host: 'localhost',
@@ -21,5 +22,7 @@ module.exports = {
                 }
             }
         }
-    }
+    },
+    outputDir: 'app/',
+    productionSourceMap: false
 }
